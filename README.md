@@ -222,6 +222,18 @@ image-website-dev/
 
 ---
 
+## 🔒 安全部署必做事项
+
+> ⚠️ 以下事项直接关系到账号与数据安全，公开仓库或生产环境**上线前必须逐项完成**。
+
+1. **修改默认管理员密码** — 代码中硬编码了 `admin / admin123`，任何人克隆仓库都能看到。首次登录后立即修改，或改动 [DataInitializer.java](backend/src/main/java/com/image/website/config/DataInitializer.java) 里的初始值。
+2. **设置强 JWT 密钥** — `application.yml` 里的默认值是开发占位符，生产环境**必须**通过 `JWT_SECRET` 环境变量覆盖（随机 32 字符以上）。密钥一旦泄露，任何人都能伪造登录态（含管理员权限）。
+3. **妥善保管 OSS AccessKey** — 真实密钥只应存在于本机 `.env`（已被 `.gitignore` 排除，不会进入版本库）。若密钥曾以截图、聊天记录等方式泄露，请到阿里云控制台**禁用并重新生成**。
+4. **生产环境关闭 DEBUG 日志** — 将 `application.yml` 中 `logging.level.com.image.website` 由 `DEBUG` 改为 `INFO`，避免敏感信息进入日志。
+5. **（建议）仓库设为私有** — 代码中保留了默认账号与测试脚本（`test-api.ps1`），若不想公开这些信息，建议将 GitHub 仓库设为 Private。
+
+---
+
 ## 🐛 故障排查
 
 | 问题 | 解决方案 |
