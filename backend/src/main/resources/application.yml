@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: image-website
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 12MB
+
+  # MySQL (development & production default)
+  datasource:
+    url: jdbc:mysql://localhost:3306/image_website?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai&createDatabaseIfNotExist=true&characterEncoding=UTF-8&connectionCollation=utf8mb4_unicode_ci
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: ${MYSQL_ROOT_PASSWORD:123456}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+    defer-datasource-initialization: true
+
+# Aliyun OSS configuration (via environment variables or this file)
+oss:
+  bucket: ${OSS_BUCKET:image-website-dev-y}
+  region: ${OSS_REGION:cn-beijing}
+  host: https://${oss.bucket}.oss-${oss.region}.aliyuncs.com
+  upload-dir: images/
+
+# JWT secret (minimum 256 bits / 32 chars for HS256)
+# 注意：此默认值仅用于本地开发，生产环境必须通过 JWT_SECRET 环境变量覆盖！
+jwt:
+  secret: ${JWT_SECRET:local-dev-only-change-me-0123456789abcdef}
+  expiration-ms: 86400000   # 24 hours
+
+logging:
+  level:
+    com.image.website: DEBUG

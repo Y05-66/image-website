@@ -1,0 +1,33 @@
+# Maven
+backend/target/
+backend/effective-pom
+backend/*.log
+!backend/src/test/resources/logback-test.xml
+
+# Node
+frontend/node_modules/
+frontend/dist/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env files (keep secrets out of git!)
+.env
+backend/.env
+frontend/.env
+
+# Logs
+*.log
+logs/
+
+# H2 data files
+*.db
+*.trace.db
